@@ -49,13 +49,13 @@ STYLEGUIDE_ID=your-styleguide-id
 
 7. Open your browser and navigate to http://localhost:3000 to interact with the chatbot.
 
-##Files
+## Files
 
 * app.js: Main server file that handles chat queries.
 * fetchFromZeroheight.js: Script to fetch and format data from Zeroheight.
 * pushToPinecone.js: Script to push formatted data to Pinecone.
 * index.html: Frontend for interacting with the chatbot.
 
-##License
+## License
 
 This project is licensed under the MIT License.
