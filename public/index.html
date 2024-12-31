@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .chatbox {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    .response {
+      margin-top: 20px;
+      padding: 10px;
+      background: #f1f1f1;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="chatbox">
+    <h1>Ask the Chatbot</h1>
+    <textarea id="query" placeholder="Type your question here..."></textarea>
+    <button onclick="askQuestion()">Ask</button>
+    <div class="response" id="response"></div>
+  </div>
+
+  <script>
+    async function askQuestion() {
+      const query = document.getElementById('query').value;
+      const responseDiv = document.getElementById('response');
+      responseDiv.textContent = 'Processing...';
+
+      try {
+        const response = await fetch('http://localhost:3000/query', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ query }),
+        });
+
+        const data = await response.json();
+        if (data.response) {
+          responseDiv.innerHTML = `<strong>Response:</strong><br>${data.response}`;
+        } else {
+          responseDiv.innerHTML = `<strong>Error:</strong><br>${data.error || 'Unknown error occurred.'}`;
+        }
+      } catch (error) {
+        responseDiv.innerHTML = `<strong>Error:</strong><br>${error.message}`;
+      }
+    }
+  </script>
+</body>
+</html>
